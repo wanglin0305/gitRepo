@@ -23,6 +23,7 @@ public class LoginFilter implements Filter {
 
 	/**
 	 * @
+	 *检查用户是否登录，未登录转发到msg页面，并自动跳转到登录页面
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest hRequest = (HttpServletRequest) request;
