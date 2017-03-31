@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"              
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans    
+            http://www.springframework.org/schema/beans/spring-beans.xsd    
+            http://www.springframework.org/schema/context     
+            http://www.springframework.org/schema/context/spring-context.xsd    
+            http://www.springframework.org/schema/tx   
+            http://www.springframework.org/schema/tx/spring-tx.xsd  
+            http://www.springframework.org/schema/aop  
+            http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+	<property name="jdbcUrl" value="jdbc:mysql:///sshVersionDB"></property>
+	<property name="user" value="root"></property>
+	<property name="password" value="123456"></property>
+</bean>
+
+<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	<property name="dataSource" ref="dataSource"></property>
+	<property name="configLocations" value="classpath:hibernate.cfg.xml"></property>
+</bean>
+
+<bean id="transactionManager" class = "org.springframework.orm.hibernate5.HibernateTransactionManager">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<tx:annotation-driven transaction-manager="transactionManager"/>
+
+<!-- 食材模块action注入 -->
+<bean id="foodMaterialAction" class="foodMaterial.action.FoodMaterialAction" scope="prototype">
+	<property name="fms" ref="fms"></property>
+</bean>
+<bean id="fms" class="foodMaterial.service.impl.FoodMeterialServiceImpl" scope="prototype">
+	<property name="fmd" ref="fmd"></property>
+</bean>
+<bean id="fmd" class="foodMaterial.dao.impl.FoodMaterialDaoImpl" scope="prototype">
+	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+</bean> 
+<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+
+
+<!-- recipe模块的action注入 -->
+<bean id="recipeAction" class="recipe.action.RecipeAction" scope="prototype">
+	<property name="recipeService" ref="recipeService"></property>
+</bean>
+<bean id="recipeService" class="recipe.service.impl.RecipeServiceImpl" scope="prototype">
+	<property name="recipeDao" ref="recipeDao"></property>
+</bean>
+<bean id="recipeDao" class="recipe.dao.impl.RecipeDaoImpl" scope="prototype">
+	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+</bean>
+
+<!-- user模块action注入 -->
+<bean id="userAction" class="user.action.UserAction" scope="prototype">
+	<property name="userService" ref="userService"></property>
+</bean>
+<bean id="userService" class="user.service.impl.UserServiceImpl" scope="prototype">
+	<property name="userDao" ref = "userDao"></property>
+</bean>
+<bean id="userDao" class="user.dao.impl.UserDAOImpl"  scope="prototype">
+	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+</bean>
+
+<!-- 推荐模块action注入 -->
+<bean id="recommendAction" class="recommand.action.RecommendAction" scope="prototype">
+	<property name="recommendService"  ref="recommendService"></property>
+</bean>
+<bean id="recommendService" class="recommand.service.impl.RecommendServiceImpl">
+	<property name="recommendDao" ref="recommendDao"></property>
+</bean>
+<bean id="recommendDao" class="recommand.dao.impl.RecommendDaoImpl">
+	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+</bean>
+
+<!-- 验证码action注入 -->
+<bean id="verifyCodeAction" class="utils.VerifyCodeAction" scope="prototype"></bean>
+</beans>            

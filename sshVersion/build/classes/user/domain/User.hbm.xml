@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+	<class name="user.domain.User" table="t_user">
+		<id name="userId" column="userId">
+			<!-- 生成主键自动生长 -->
+			<!-- 主键生成策略有多种，
+			1、increment ：自增长一个不能再集群环境下使用
+			2、identity ：mysql支持，oracle不支持，需要数据库本身支持逐渐自动增长
+			3、sequence ：需要数据库支持序列，mysql不支持，oracle支持。
+			4、native ： 根据底层数据库，从identity和sequence和hilo中选择支持的一种
+			5、uuid ：hibernate使用128位uuid算法生成唯一的字符串id值，被编码为32位的16进制字符串
+			6、assigned：由java程序员指定主键生成方法-->
+			<generator class="native"></generator>
+		</id>
+		<property name="userName" column="userName"></property>
+		<property name="password" column="password" ></property>
+		<property name="email" column= "email"></property>
+		<property name="age" column="age" not-null="false"></property>
+		<property name="weight" column="weight" not-null="false"></property>
+		<property name="sex" column="sex" not-null="false"></property>
+		<property name="work" column="work" not-null="false"></property>
+		<property name="pregnant" column="pregnant" not-null="false"></property>
+		<property name="lactation" column="lactation" not-null="false"></property>
+		
+		<!-- 配置一对多 name属性为类中对应的变量名，column为数据库中user表的列名 one-to-many对应响应的类名 -->
+		<!-- 配置cascade之后，级联保存，只需要把多的那个加到一的那个的set里面，并保存一的那个就可以了，底层代码也是
+		两个互相保存并都save来实现的 -->
+		<!-- inverse属性，配置是否放弃关系维护，默认为false，表示不放弃关系维护 
+		但是配置了inverse true之后，级联保存可以只保存一，但是必须设置一，也设置多才可以，设置为false的话，只设置一保存一即可-->
+		<!-- fetch 标签，默认为select lazy设置get的发送语句方式，默认为true 默认为关联级别延迟 extra 极其懒惰 
+		还有一个batch-size属性，值越大，发送语句越少-->
+		<set name="resultSet" cascade="save-update,delete" inverse="true">
+			<key column="user_resultId" not-null="false"></key>
+			<one-to-many class="result.domain.Result"></one-to-many>
+		</set>
+		
+		<set name="recommends" cascade="save-update,delete" inverse="true">
+			<key column="user_recommendId" not-null="false"></key>
+			<one-to-many class="recommand.domain.Recommend"></one-to-many>
+		</set>
+	</class>
+</hibernate-mapping>

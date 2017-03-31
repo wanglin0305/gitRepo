@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="recommand.domain.Recommend" table="t_recommend">
+		<id name="id" column="rid">
+			<generator class="native"></generator>
+		</id>
+		<property name="date" column="date"></property>
+		
+		<set name="recipes">
+			<key column="recommendId"></key>
+			<one-to-many class="recommand.domain.RecommendedRecipe"></one-to-many>
+		</set>
+		<many-to-one name="user" column="user_recommendId" class="user.domain.User"></many-to-one>
+	</class>
+</hibernate-mapping>

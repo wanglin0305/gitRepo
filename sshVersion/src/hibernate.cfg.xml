@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+	<!-- 	<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql:///sshVersionDB</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">123456</property> -->
+		
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<!-- 用户配置自动生成表 -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<!-- 不同数据库关键词不同，比如分页，？？？只是跟分页有关系？ -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		
+		
+		<!-- 使用相对路径，都在下面 -->
+		<mapping resource="result/domain/Result.hbm.xml"/>
+		<mapping resource="user/domain/User.hbm.xml"/>
+		<mapping resource="recommand/domain/Recommend.hbm.xml"/>
+		<mapping resource="recommand/domain/RecommendedRecipe.hbm.xml"/>
+		<mapping resource="recipe/domain/Recipe.hbm.xml"/>
+		<mapping resource="recipe/domain/RecipeCategory.hbm.xml"/>
+		<mapping resource="foodMaterial/domain/FoodMaterial.hbm.xml"/>
+		<mapping resource="foodMaterial/domain/FoodMaterialCategory.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+	<class name="foodMaterial.domain.FoodMaterialCategory" table="t_fmc">
+		<id name="fmCategoryId" column="fmc_id">
+			<!-- 生成主键自动生长 -->
+			<!-- 主键生成策略有多种，
+			1、increment ：自增长一个不能再集群环境下使用
+			2、identity ：mysql支持，oracle不支持，需要数据库本身支持逐渐自动增长
+			3、sequence ：需要数据库支持序列，mysql不支持，oracle支持。
+			4、native ： 根据底层数据库，从identity和sequence和hilo中选择支持的一种
+			5、uuid ：hibernate使用128位uuid算法生成唯一的字符串id值，被编码为32位的16进制字符串
+			6、assigned：由java程序员指定主键生成方法-->
+			<generator class="uuid">
+			</generator>
+		</id>
+		<property name="fmCategoryName" column="fmc_name"></property>
+		<many-to-one name="fMaterialCategory" class="foodMaterial.domain.FoodMaterialCategory" not-null="false"></many-to-one>
+
+		<set name="fMaterialset" table="fm_fmc">
+			<key column="fmcId" not-null="false"></key>
+			<many-to-many column="fmId" class="foodMaterial.domain.FoodMaterial"></many-to-many>
+		</set>
+
+		
+	</class>
+</hibernate-mapping>

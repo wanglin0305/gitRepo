@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="sshVersion" extends="struts-default" namespace="/">
+	<interceptors>
+		<interceptor name="loginInterceptor" class="filter.LoginInterceptor"></interceptor>
+	</interceptors>
+
+		<action name="foodMaterialAction_*" class="foodMaterialAction" method="{1}">
+			<result name="listCategory">/jsp/foodMetarial.jsp</result>
+			<result name="listSecondCategory">/jsp/secondFMC.jsp</result>
+			<!-- 当执行action中的listall方法时，转发到/jsp/listfoodMetarial.jsp页面中，把所有元素取出后放到xml
+			元素中，并返回此jsp页面。然后再利用jquery填充到/jsp/foodMetarial.jsp的div中。 -->
+			<result name="listAll">/jsp/listfoodMetarial.jsp</result>
+			<result name="findFM">/jsp/listfoodMetarial.jsp</result>
+			<result name="fMDetail">/jsp/foodMaterialDetail.jsp</result>
+			<result name="listPage">/jsp/listFMPage.jsp</result>
+		</action>
+
+		<action name="recipeAction_*" class="recipeAction" method="{1}">
+			<result name="listCategory">/jsp/foodRecipe.jsp</result>
+			<result name="listAll">/jsp/listfoodRecipe.jsp</result>
+		</action>
+		
+		<!-- name为访问路径，class为bean中此action注入的变量名，resule中name为对应
+		method返回的字符串，result中地址为转发或重定向到的地址-->
+		<action name="userAction_*" class="userAction" method="{1}">
+			<result name="registSuccess">/msg.jsp</result>
+			<result name="registFail">/regist.jsp</result>
+			<result name="loginSuccess" type="redirect">/index.jsp</result>
+			<result name="loginFail">/jsp/user/login.jsp</result>
+			<result name="logout">/index.jsp</result>
+			<result name="updatePasswordSuccess">/msg.jsp</result> 
+			<result name= "updatePasswordFail">/jsp/user/pwd.jsp</result>
+		</action>
+		
+		<action name="recommendAction_*" class="recommendAction" method="{1}">
+			<result name="result" type="redirect">/jsp/result/result.jsp</result>
+			<result name="userInfo">/jsp/recommend/userInfo.jsp</result>
+			
+			<interceptor-ref name="loginInterceptor"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="verifyCodeAction" class="verifyCodeAction"></action>
+	</package>
+</struts>

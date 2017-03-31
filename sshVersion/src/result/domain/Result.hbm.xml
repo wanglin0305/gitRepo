@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="result.domain.Result" table="t_result">
+		<id name="resultId" column="resultId">
+		<generator class="native"></generator>
+		</id>
+		<property name="calorie" column="calorie"></property>
+		<property name="carbohydrate" column="carbohydrate"></property>
+		<property name="protein" column="protein"></property>
+		<property name="fat" column="fat"></property>
+		<property name="date" column="date"></property>
+		
+		<many-to-one name="user" column="user_resultId" class="user.domain.User"></many-to-one>
+	</class>
+</hibernate-mapping>
